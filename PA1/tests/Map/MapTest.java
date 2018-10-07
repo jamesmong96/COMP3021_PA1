@@ -287,4 +287,34 @@ class MapTest {
         assertEquals('@', m.getCells()[2][2].getRepresentation());
     }
 
+    @Test
+    @DisplayName("Is Occupiable And Not Occupied With Crate")
+    void testIsOccupiableAndNotOccupiedWithCrate() {
+
+        //Make sure one cell works
+        assertTrue(m.isOccupiableAndNotOccupiedWithCrate(1, 1));
+        assertTrue(m.isOccupiableAndNotOccupiedWithCrate(3, 3));
+        //Check negative number input
+        assertFalse(m.isOccupiableAndNotOccupiedWithCrate(-1, 1));
+        assertFalse(m.isOccupiableAndNotOccupiedWithCrate(1, -1));
+        assertFalse(m.isOccupiableAndNotOccupiedWithCrate(-1, -1));
+        //Check out of bound
+        assertFalse(m.isOccupiableAndNotOccupiedWithCrate(10, 0));
+        assertFalse(m.isOccupiableAndNotOccupiedWithCrate(0, 10));
+        assertFalse(m.isOccupiableAndNotOccupiedWithCrate(10, 10));
+        //Check wall
+        assertFalse(m.isOccupiableAndNotOccupiedWithCrate(0, 0));
+        //check crate
+        assertFalse(m.isOccupiableAndNotOccupiedWithCrate(2, 3));
+        //check player
+        assertFalse(m.isOccupiableAndNotOccupiedWithCrate(2, 1));
+    }
+/*
+    private char[][] goodMap = {
+            {'#', '#', '#', '#', '#', '#'},
+            {'#', '.', '.', '.', '.', '#'},
+            {'.', '@', '.', 'a', 'b', '#'},
+            {'#', '.', '.', 'A', 'B', '#'},
+            {'#', '#', '#', '#', '#', '#'},
+    };*/
 }
