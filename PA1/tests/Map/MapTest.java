@@ -5,6 +5,7 @@ import Exceptions.InvalidNumberOfPlayersException;
 import Exceptions.UnknownElementException;
 import Map.Occupant.Crate;
 import Map.Occupiable.DestTile;
+import Map.Occupiable.Occupiable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,9 @@ class MapTest {
         m = new Map();
         m.initialize(rows, cols, goodMap);
     }
+
+    @Test
+    @DisplayName("Initialize - ")
 
     @Test
     @DisplayName("Get DestTile ArrayList")
@@ -308,13 +312,6 @@ class MapTest {
         assertFalse(m.isOccupiableAndNotOccupiedWithCrate(2, 3));
         //check player
         assertFalse(m.isOccupiableAndNotOccupiedWithCrate(2, 1));
+
     }
-/*
-    private char[][] goodMap = {
-            {'#', '#', '#', '#', '#', '#'},
-            {'#', '.', '.', '.', '.', '#'},
-            {'.', '@', '.', 'a', 'b', '#'},
-            {'#', '.', '.', 'A', 'B', '#'},
-            {'#', '#', '#', '#', '#', '#'},
-    };*/
 }
