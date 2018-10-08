@@ -36,9 +36,9 @@ class MapTest {
         m.initialize(rows, cols, goodMap);
     }
 
-    @Test
+    /*@Test
     @DisplayName("Initialize - ")
-
+*/
     @Test
     @DisplayName("Get DestTile ArrayList")
     void getDestTiles() {
