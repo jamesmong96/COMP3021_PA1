@@ -146,10 +146,6 @@ public class Map {
                     ((Occupiable) cells[r][c]).removeOccupant();
                     return true;
                 }
-                //check the next block if it is an occupant
-                //shouldn't happen, a safe check for the next if statement
-                if (!((Occupiable) cells[r - 1][c]).getOccupant().isPresent())
-                    return false;
                 //check the next block if it is crate
                 //shouldn't happen, a safe check in case some unexpected logic error
                 if (((Occupiable) cells[r - 1][c]).getOccupant().get() instanceof Crate) {
@@ -158,16 +154,13 @@ public class Map {
                         return false;
                     //if yes then check the next next block if it is empty
                     if (isOccupiableAndNotOccupiedWithCrate((r - 2), c)) {
-                        if (!this.moveCrate(((Crate) ((Occupiable) cells[r - 1][c]).getOccupant().get()), Direction.UP))
-                            return false;
+                        this.moveCrate(((Crate) ((Occupiable) cells[r - 1][c]).getOccupant().get()), Direction.UP);
                         //safe check for the next block is good to move
                         if (isOccupiableAndNotOccupiedWithCrate((r - 1), c)) {
                             player.setPos((r - 1), c);
                             ((Occupiable) cells[r - 1][c]).setOccupant(player);
                             ((Occupiable) cells[r][c]).removeOccupant();
                         }
-                        else return false;
-
                         break;
                     }
                 }
@@ -187,9 +180,6 @@ public class Map {
                     ((Occupiable) cells[r][c]).removeOccupant();
                     break;
                 }
-                //check the next block if it is an occupant
-                if (!((Occupiable) cells[r + 1][c]).getOccupant().isPresent())
-                    return false;
                 //check the next block if it is crate
                 if (((Occupiable) cells[r + 1][c]).getOccupant().get() instanceof Crate) {
                     //check the next next block if it is valid
@@ -197,16 +187,13 @@ public class Map {
                         return false;
                     //if yes then check the next next block if it is empty
                     if (isOccupiableAndNotOccupiedWithCrate((r + 2), c)) {
-                        if (!this.moveCrate(((Crate) ((Occupiable) cells[r + 1][c]).getOccupant().get()), Direction.DOWN))
-                            return false;
+                        this.moveCrate(((Crate) ((Occupiable) cells[r + 1][c]).getOccupant().get()), Direction.DOWN);
                         //safe check for the next block is good to move
                         if (isOccupiableAndNotOccupiedWithCrate((r + 1), c)) {
                             player.setPos((r + 1), c);
                             ((Occupiable) cells[r + 1][c]).setOccupant(player);
                             ((Occupiable) cells[r][c]).removeOccupant();
                         }
-                        else return false;
-
                         break;
                     }
                 }
@@ -226,9 +213,6 @@ public class Map {
                     ((Occupiable) cells[r][c]).removeOccupant();
                     break;
                 }
-                //check the next block if it is an occupant
-                if (!((Occupiable) cells[r][c - 1]).getOccupant().isPresent())
-                    return false;
                 //check the next block if it is crate
                 if (((Occupiable) cells[r][c - 1]).getOccupant().get() instanceof Crate) {
                     //check the next next block if it is valid
@@ -236,16 +220,13 @@ public class Map {
                         return false;
                     //if yes then check the next next block if it is empty
                     if (isOccupiableAndNotOccupiedWithCrate(r, (c - 2))) {
-                        if (!this.moveCrate(((Crate) ((Occupiable) cells[r][c - 1]).getOccupant().get()), Direction.LEFT))
-                            return false;
+                        this.moveCrate(((Crate) ((Occupiable) cells[r][c - 1]).getOccupant().get()), Direction.LEFT);
                         //safe check for the next block is good to move
                         if (isOccupiableAndNotOccupiedWithCrate((r), c - 1)) {
                             player.setPos((r), c - 1);
                             ((Occupiable) cells[r][c - 1]).setOccupant(player);
                             ((Occupiable) cells[r][c]).removeOccupant();
                         }
-                        else return false;
-
                         break;
                     }
                 }
@@ -265,9 +246,6 @@ public class Map {
                     ((Occupiable) cells[r][c]).removeOccupant();
                     break;
                 }
-                //check the next block if it is an occupant
-                if (!((Occupiable) cells[r][c + 1]).getOccupant().isPresent())
-                    return false;
                 //check the next block if it is crate
                 if (((Occupiable) cells[r][c + 1]).getOccupant().get() instanceof Crate) {
                     //check the next next block if it is valid
@@ -275,22 +253,17 @@ public class Map {
                         return false;
                     //if yes then check the next next block if it is empty
                     if (isOccupiableAndNotOccupiedWithCrate(r, (c + 2))) {
-                        if (!this.moveCrate(((Crate) ((Occupiable) cells[r][c + 1]).getOccupant().get()), Direction.RIGHT))
-                            return false;
+                        this.moveCrate(((Crate) ((Occupiable) cells[r][c + 1]).getOccupant().get()), Direction.RIGHT);
                         //safe check for the next block is good to move
                         if (isOccupiableAndNotOccupiedWithCrate((r), c + 1)) {
                             player.setPos((r), c + 1);
                             ((Occupiable) cells[r][c + 1]).setOccupant(player);
                             ((Occupiable) cells[r][c]).removeOccupant();
                         }
-                        else return false;
-
                         break;
                     }
                 }
                 return false;
-
-            default: return false;
         }
 
         return true;

@@ -36,9 +36,24 @@ class MapTest {
         m.initialize(rows, cols, goodMap);
     }
 
-    /*@Test
-    @DisplayName("Initialize - ")
-*/
+  /*  @Test
+    @DisplayName("Initialize - more than one player")
+    void initializeMoreThanOnePlayer() {
+        //initialize with a suitable test map
+        char[][] testMap1 = {
+                {'#', '#', '#', '#', '#', '#'},
+                {'#', '.', '@', '@', '.', '#'},
+                {'.', '.', '.', 'a', 'b', '#'},
+                {'#', '.', '.', 'A', 'B', '#'},
+                {'#', '#', '#', '#', '#', '#'},
+        };
+        try {
+            assertThrows(InvalidMapException.class, m.initialize(rows, cols, testMap1));
+        } catch () {
+
+        }
+    }*/
+
     @Test
     @DisplayName("Get DestTile ArrayList")
     void getDestTiles() {
