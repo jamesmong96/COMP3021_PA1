@@ -92,6 +92,9 @@ public class Map {
 
         if (countPlayer != 1)
             throw new InvalidNumberOfPlayersException("The map should have one Player!");
+        else if (countCrate == 0 || countDest == 0) {
+            throw new InvalidMatchingOfCrateAndDestTile("The number of crate or destTile cannot be 0!");
+        }
         else if (countCrate != countDest) {
             throw new InvalidMatchingOfCrateAndDestTile("The number of crate and DestTile is not the same!");
         }
@@ -103,7 +106,7 @@ public class Map {
 
             //initialize both list since the number is the same
             //initialize variables for helping changing cases
-            int temp = 0;
+            int temp;
             for (int i = 0; i < crates.size(); i++) {
                 destTileTest[i]= destTiles.get(i).getRepresentation();
                 temp = (int) crates.get(i).getRepresentation() - 32;
@@ -131,9 +134,8 @@ public class Map {
 
             //check the resulting array is all \0 or not
             for (int i = 0; i < crateTest.length; i++) {
-                if (crateTest[i] == '\0' && destTileTest[i] == '\0')
-                    continue;
-                else throw new InvalidMatchingOfCrateAndDestTile("The IDs of crates doesn't match with the IDs of destTile!");
+                if (crateTest[i] != '\0' || destTileTest[i] != '\0')
+                    throw new InvalidMatchingOfCrateAndDestTile("The IDs of crates doesn't match with the IDs of destTile!");
             }
 
         }
@@ -456,8 +458,6 @@ public class Map {
                 return true;
         }
 
-        //throw UnknownElementException for the above if statement has covered all possible cases
-        new UnknownElementException("The map consist unknown elements!");
         return false;
 
     }
