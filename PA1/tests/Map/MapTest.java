@@ -1,6 +1,7 @@
 package Map;
 
 import Exceptions.InvalidMapException;
+import Exceptions.InvalidMatchingOfCrateAndDestTile;
 import Exceptions.InvalidNumberOfPlayersException;
 import Exceptions.UnknownElementException;
 import Map.Occupant.Crate;
@@ -36,8 +37,8 @@ class MapTest {
         m.initialize(rows, cols, goodMap);
     }
 
-  /*  @Test
-    @DisplayName("Initialize - more than one player")
+    @Test
+    @DisplayName("Initialize(Player) - more than one player")
     void initializeMoreThanOnePlayer() {
         //initialize with a suitable test map
         char[][] testMap1 = {
@@ -47,12 +48,124 @@ class MapTest {
                 {'#', '.', '.', 'A', 'B', '#'},
                 {'#', '#', '#', '#', '#', '#'},
         };
-        try {
-            assertThrows(InvalidMapException.class, m.initialize(rows, cols, testMap1));
-        } catch () {
 
-        }
-    }*/
+        assertThrows(InvalidNumberOfPlayersException.class, () -> m.initialize(rows, cols, testMap1));
+    }
+
+    @Test
+    @DisplayName("Initialize(Player) - no player")
+    void initializeNoPlayer() {
+        //initialize with a suitable test map
+        char[][] testMap1 = {
+                {'#', '#', '#', '#', '#', '#'},
+                {'#', '.', '.', '.', '.', '#'},
+                {'.', '.', '.', 'a', 'b', '#'},
+                {'#', '.', '.', 'A', 'B', '#'},
+                {'#', '#', '#', '#', '#', '#'},
+        };
+
+        assertThrows(InvalidNumberOfPlayersException.class, () -> m.initialize(rows, cols, testMap1));
+    }
+
+    @Test
+    @DisplayName("Initialize(Crate/DestTile) - no crate and no destTile and no both")
+    void initializeNoCrateAndDestTile() {
+        //initialize with a suitable test map
+        char[][] testMap1 = {
+                {'#', '#', '#', '#', '#', '#'},
+                {'#', '.', '@', '.', '.', '#'},
+                {'.', '.', '.', '.', '.', '#'},
+                {'#', '.', '.', 'A', 'B', '#'},
+                {'#', '#', '#', '#', '#', '#'},
+        };
+
+        //initialize with a suitable test map
+        char[][] testMap2 = {
+                {'#', '#', '#', '#', '#', '#'},
+                {'#', '.', '.', '.', '.', '#'},
+                {'.', '.', '@', 'a', 'b', '#'},
+                {'#', '.', '.', '.', '.', '#'},
+                {'#', '#', '#', '#', '#', '#'},
+        };
+
+        //initialize with a suitable test map
+        char[][] testMap3 = {
+                {'#', '#', '#', '#', '#', '#'},
+                {'#', '.', '.', '.', '.', '#'},
+                {'.', '.', '@', '.', '.', '#'},
+                {'#', '.', '.', '.', '.', '#'},
+                {'#', '#', '#', '#', '#', '#'},
+        };
+
+        assertThrows(InvalidMatchingOfCrateAndDestTile.class, () -> m.initialize(rows, cols, testMap1));
+        assertThrows(InvalidMatchingOfCrateAndDestTile.class, () -> m.initialize(rows, cols, testMap2));
+        assertThrows(InvalidMatchingOfCrateAndDestTile.class, () -> m.initialize(rows, cols, testMap3));
+    }
+
+    @Test
+    @DisplayName("Initialize(Crate/DestTile) - crate more or less than destTile")
+    void initializeCrateMoreOrLessThanDestTile() {
+        //initialize with a suitable test map
+        char[][] testMap1 = {
+                {'#', '#', '#', '#', '#', '#'},
+                {'#', '.', '@', '.', '.', '#'},
+                {'.', '.', '.', '.', 'b', '#'},
+                {'#', '.', '.', 'A', 'B', '#'},
+                {'#', '#', '#', '#', '#', '#'},
+        };
+
+        //initialize with a suitable test map
+        char[][] testMap2 = {
+                {'#', '#', '#', '#', '#', '#'},
+                {'#', '.', '@', '.', '.', '#'},
+                {'.', '.', '.', 'a', 'b', '#'},
+                {'#', '.', '.', '.', 'B', '#'},
+                {'#', '#', '#', '#', '#', '#'},
+        };
+
+        assertThrows(InvalidMatchingOfCrateAndDestTile.class, () -> m.initialize(rows, cols, testMap1));
+        assertThrows(InvalidMatchingOfCrateAndDestTile.class, () -> m.initialize(rows, cols, testMap2));
+    }
+
+    @Test
+    @DisplayName("Initialize(Crate/DestTile) - ID doesn't match")
+    void initializeIdDoesntMatch() {
+        //initialize with a suitable test map
+        char[][] testMap1 = {
+                {'#', '#', '#', '#', '#', '#'},
+                {'#', '.', '@', '.', '.', '#'},
+                {'.', '.', '.', 'd', 'b', '#'},
+                {'#', '.', '.', 'A', 'B', '#'},
+                {'#', '#', '#', '#', '#', '#'},
+        };
+
+        //initialize with a suitable test map
+        char[][] testMap2 = {
+                {'#', '#', '#', '#', '#', '#'},
+                {'#', '.', '@', '.', '.', '#'},
+                {'.', '.', '.', 'a', 'b', '#'},
+                {'#', '.', '.', 'E', 'M', '#'},
+                {'#', '#', '#', '#', '#', '#'},
+        };
+
+        assertThrows(InvalidMatchingOfCrateAndDestTile.class, () -> m.initialize(rows, cols, testMap1));
+        assertThrows(InvalidMatchingOfCrateAndDestTile.class, () -> m.initialize(rows, cols, testMap2));
+    }
+
+    @Test
+    @DisplayName("Initialize - Unknown element")
+    void initializeUnknownElement() {
+        //initialize with a suitable test map
+        char[][] testMap1 = {
+                {'#', '#', '#', '#', '#', '#'},
+                {'#', '.', '@', '.', '.', '#'},
+                {'.', '.', '2', 'a', 'b', '#'},
+                {'#', '.', '.', 'A', 'B', '#'},
+                {'#', '#', '#', '#', '#', '#'},
+        };
+
+        assertThrows(UnknownElementException.class, () -> m.initialize(rows, cols, testMap1));
+    }
 
     @Test
     @DisplayName("Get DestTile ArrayList")

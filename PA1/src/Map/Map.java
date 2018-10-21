@@ -11,6 +11,7 @@ import Map.Occupiable.Occupiable;
 import Map.Occupiable.Tile;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class holding a the 2D array of cells, representing the world map
@@ -91,15 +92,53 @@ public class Map {
 
         if (countPlayer != 1)
             throw new InvalidNumberOfPlayersException("The map should have one Player!");
-        else if (countCrate != countDest) {
-            throw new InvalidMatchingOfCrateAndDestTile("The number of crate and DestTile is nor the same!");
+        else if (countCrate == 0 || countDest == 0) {
+            throw new InvalidMatchingOfCrateAndDestTile("The number of crate or destTile cannot be 0!");
         }
-        //TODO
-        /*else {
-            for (int i = 0; i < crates.size(); i++)
-                for (int j = 0; j < destTiles.size(); j++)
+        else if (countCrate != countDest) {
+            throw new InvalidMatchingOfCrateAndDestTile("The number of crate and DestTile is not the same!");
+        }
+        else {
+            //check does all crates' ID match with those of destTile
+            //initialize two list to compare the representation
+            char[] crateTest = new char[crates.size()];
+            char[] destTileTest = new char[destTiles.size()];
 
-        }*/
+            //initialize both list since the number is the same
+            //initialize variables for helping changing cases
+            int temp;
+            for (int i = 0; i < crates.size(); i++) {
+                destTileTest[i]= destTiles.get(i).getRepresentation();
+                temp = (int) crates.get(i).getRepresentation() - 32;
+                crateTest[i] = (char) temp;
+            }
+
+            //compare the content is both array
+            for (int i = 0; i < crateTest.length; i++) {
+                if (crateTest[i] == '\0') {
+                    continue;
+                }
+
+                for (int j = 0; j < destTileTest.length; j++) {
+                    if (destTileTest[j] == '\0')
+                        continue;
+
+                    if (crateTest[i] == destTileTest[j]) {
+                        crateTest[i] = '\0';
+                        destTileTest[j] = '\0';
+                        i = -1;
+                        break;
+                    }
+                }
+            }
+
+            //check the resulting array is all \0 or not
+            for (int i = 0; i < crateTest.length; i++) {
+                if (crateTest[i] != '\0' || destTileTest[i] != '\0')
+                    throw new InvalidMatchingOfCrateAndDestTile("The IDs of crates doesn't match with the IDs of destTile!");
+            }
+
+        }
 
     }
 
@@ -392,8 +431,6 @@ public class Map {
                 return true;
         }
 
-        //throw UnknownElementException for the above if statement has covered all possible cases
-        new UnknownElementException("The map consist unknown elements!");
         return false;
 
     }
