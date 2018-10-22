@@ -137,9 +137,10 @@ public class Game {
         int dead = 0;
         int deadLock = 0;
 
-        try {
-
             for (int i = 0; i < m.getCrates().size(); i++) {
+
+                //reset flag
+                dead = 0;
 
                 int r = m.getCrates().get(i).getR();
                 int c = m.getCrates().get(i).getC();
@@ -165,11 +166,7 @@ public class Game {
                 else dead++;
 
                 if (m.isOccupiableAndNotOccupiedWithCrate(r - 1, c)) {
-                    if (m.isOccupiableAndNotOccupiedWithCrate(r + 1, c)) {
-                        dead = 0;
-                        continue;
-                    }
-                    else if (isPlayer(r + 1, c)) {
+                    if (isPlayer(r + 1, c)) {
                         dead = 0;
                         continue;
                     }
@@ -191,11 +188,7 @@ public class Game {
                 else dead++;
 
                 if (m.isOccupiableAndNotOccupiedWithCrate(r, c - 1)) {
-                    if (m.isOccupiableAndNotOccupiedWithCrate(r, c + 1)) {
-                        dead = 0;
-                        continue;
-                    }
-                    else if (isPlayer(r, c + 1)) {
+                   if (isPlayer(r, c + 1)) {
                         dead = 0;
                         continue;
                     }
@@ -215,10 +208,6 @@ public class Game {
             }
 
             return false; // You may also modify this line.
-
-        } catch (NullPointerException e) {
-            return true;
-        }
     }
 
     /**
@@ -250,11 +239,11 @@ public class Game {
         try {
             switch (c) {
                 case 'w':
-                    if(m.movePlayer(Map.Direction.UP))
+                    if (m.movePlayer(Map.Direction.UP))
                         return true;
                     break;
                 case 'a':
-                    if(m.movePlayer(Map.Direction.LEFT))
+                    if (m.movePlayer(Map.Direction.LEFT))
                         return true;
                     break;
                 case 's':
@@ -262,7 +251,7 @@ public class Game {
                         return true;
                     break;
                 case 'd':
-                    if(m.movePlayer(Map.Direction.RIGHT))
+                    if (m.movePlayer(Map.Direction.RIGHT))
                         return true;
                     break;
                 case 'r':
@@ -274,12 +263,11 @@ public class Game {
                         return false;
                     }
                 default:
-                    return false;
+                    throw new UnknownElementException("The input character is invalid!");
             }
 
             return false; // You may also modify this line.
-
-        } catch (NullPointerException e) {
+        } catch (UnknownElementException e) {
             return false;
         }
 
