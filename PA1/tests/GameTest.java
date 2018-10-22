@@ -86,6 +86,9 @@ class GameTest {
 
         g.loadMap("tests/testmap4.txt");
         assertFalse(g.isDeadlocked());
+
+        g.loadMap("test/testmap5.txt");
+        assertFalse(g.isDeadlocked());
     }
 
     @Test
