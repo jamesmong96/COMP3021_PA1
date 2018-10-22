@@ -404,7 +404,7 @@ public class Map {
                 ((Occupiable) cells[row][col]).removeOccupant();
                 return true;
 
-            case RIGHT:
+            default: //which is the case RIGHT
                 //check out of bound
                 if (!this.isValid(row, (col + 1)))
                     return false;
@@ -417,8 +417,6 @@ public class Map {
                 ((Occupiable) cells[row][col + 1]).setOccupant(c);
                 ((Occupiable) cells[row][col]).removeOccupant();
                 return true;
-
-            default: return false;
         }
     }
 

@@ -34,7 +34,7 @@ class GameTest {
 
     @Test
     @DisplayName("Make move with Is Win")
-    void testMakeMoveAndIsWin() {
+    void testMakeMoveAndIsWin() throws InvalidMapException {
         assertFalse(g.isWin());
         assertFalse(g.makeMove('w'));
         assertFalse(g.makeMove('a'));

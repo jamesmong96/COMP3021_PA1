@@ -233,7 +233,7 @@ public class Game {
      *          r: reload map (resets any progress made so far)
      * @return Whether or not the move was successful
      */
-    public boolean makeMove(char c) {
+    public boolean makeMove(char c) throws InvalidMapException{
         //TODO
 
         try {
@@ -255,13 +255,8 @@ public class Game {
                         return true;
                     break;
                 case 'r':
-                    try {
                         m.initialize(this.numRows, this.numCols, this.rep);
                         return true;
-                    } catch (InvalidMapException e) {
-                        //the map should pass the exception previously
-                        return false;
-                    }
                 default:
                     throw new UnknownElementException("The input character is invalid!");
             }
