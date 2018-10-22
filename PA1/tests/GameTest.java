@@ -1,5 +1,6 @@
 import Exceptions.InvalidMapException;
 import Exceptions.InvalidMatchingOfCrateAndDestTile;
+import Exceptions.UnknownElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,14 @@ class GameTest {
         assertThrows(InvalidMapException.class, () -> g.loadMap("tests/badmap.txt"));
     }
 
+    @Test
+    @DisplayName("Load Map(with map2, map3, map4 and map5) - first char is not integer")
+    void loadMapFirstCharIsNotInteger() {
+        assertThrows(UnknownElementException.class, () -> g.loadMap("tests/badmap2.txt"));
+        assertThrows(UnknownElementException.class, () -> g.loadMap("tests/badmap3.txt"));
+        assertThrows(UnknownElementException.class, () -> g.loadMap("tests/badmap4.txt"));
+        assertThrows(UnknownElementException.class, () -> g.loadMap("tests/badmap5.txt"));
+    }
 
     @Test
     @DisplayName("Make move with Is Win")
@@ -46,7 +55,15 @@ class GameTest {
         assertTrue(g.isWin());
         assertTrue(g.makeMove('r'));
         assertFalse(g.isWin());
+    }
 
+    @Test
+    @DisplayName("Is Player")
+    void testIsPlayer() {
+        assertTrue(g.isPlayer(1,1));
+        assertFalse(g.isPlayer(0, 0));
+        assertFalse(g.isPlayer(2, 1));
+        assertFalse(g.isPlayer(3, 1));
     }
 
     @Test

@@ -50,8 +50,7 @@ public class Game {
             System.out.println(String.valueOf(numRows));  //display numRows
         }
         else {
-            new UnknownElementException("The first number is not an integer!");
-            return;
+            throw new UnknownElementException("The first number is not an integer!");
         }
 
         //get number of col
@@ -60,14 +59,11 @@ public class Game {
             System.out.println(String.valueOf(numCols));  //display numCols
         }
         else {
-            new UnknownElementException("The first number is not an integer!");
-            return;
+            throw new UnknownElementException("The first number is not an integer!");
         }
 
-        if (numRows <= 0 && numCols <= 0) {
-            System.out.println("The file has invalid number of rows or number of columns!");
-            //throw new exception
-            return;
+        if (numRows <= 0 || numCols <= 0) {
+           throw new UnknownElementException("The numbe row or col is invalid!");
         }
         //initialize variable
         m = new Map();
@@ -87,9 +83,7 @@ public class Game {
                     }
                 }
                 else {
-                    //throw new exception
-                    System.out.println("The map is not in a proper shape!");
-                    return;
+                    throw new UnknownElementException("The map is not in a proper shape!");
                 }
             }
             //System.out.println();  //for debug purpose
@@ -108,17 +102,11 @@ public class Game {
     public boolean isWin() {
         //TODO
 
-        try {
-
             for (int i = 0; i < m.getDestTiles().size(); i++)
                 if (!m.getDestTiles().get(i).isCompleted())
                     return false;
 
             return true; // You may also modify this line.
-
-        } catch (NullPointerException e) {
-            return false;
-        }
 
     }
 
@@ -238,19 +226,12 @@ public class Game {
      */
     public void display() {
         //TODO
-
-        try {
-
             for (int i = 0; i < this.numRows; i++) {
                 for (int j = 0; j < this.numCols; j++) {
                     System.out.print(m.getCells()[i][j].getRepresentation());
                 }
                 System.out.println();
             }
-
-        } catch (NullPointerException e) {
-            return;
-        }
 
     }
 
