@@ -43,7 +43,6 @@ public class Map {
         crates.clear();
         destTiles.clear();
 
-        try {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     //case of Uppercase letters
@@ -87,9 +86,6 @@ public class Map {
                     }
                 }
             }
-        } catch (IndexOutOfBoundsException e) {
-            throw new UnknownElementException("The row or col specific in the first two line is invalid!");
-        }
 
 
         if (countPlayer != 1)
@@ -187,30 +183,37 @@ public class Map {
                     ((Occupiable) cells[r][c]).removeOccupant();
                     return true;
                 }
-                //check the next block if it is an occupant
-                //shouldn't happen, a safe check for the next if statement
-                if (!((Occupiable) cells[r - 1][c]).getOccupant().isPresent())
-                    return false;
                 //check the next block if it is crate
                 //shouldn't happen, a safe check in case some unexpected logic error
                 if (((Occupiable) cells[r - 1][c]).getOccupant().get() instanceof Crate) {
+                    /*
                     //check the next next block if it is valid
                     if (!this.isValid((r - 2), c))
                         return false;
+
                     //if yes then check the next next block if it is empty
                     if (isOccupiableAndNotOccupiedWithCrate((r - 2), c)) {
-                        if (!this.moveCrate(((Crate) ((Occupiable) cells[r - 1][c]).getOccupant().get()), Direction.UP))
-                            return false;
+                        this.moveCrate(((Crate) ((Occupiable) cells[r - 1][c]).getOccupant().get()), Direction.UP);
+
                         //safe check for the next block is good to move
                         if (isOccupiableAndNotOccupiedWithCrate((r - 1), c)) {
                             player.setPos((r - 1), c);
                             ((Occupiable) cells[r - 1][c]).setOccupant(player);
                             ((Occupiable) cells[r][c]).removeOccupant();
                         }
-                        else return false;
-
                         break;
                     }
+                    */
+
+                    if (this.moveCrate(((Crate) ((Occupiable) cells[r - 1][c]).getOccupant().get()), Direction.UP)) {
+                        if (isOccupiableAndNotOccupiedWithCrate((r - 1), c)) {
+                            player.setPos((r - 1), c);
+                            ((Occupiable) cells[r - 1][c]).setOccupant(player);
+                            ((Occupiable) cells[r][c]).removeOccupant();
+                        }
+                        break;
+                    }
+
                 }
                 return false;
 
@@ -228,26 +231,28 @@ public class Map {
                     ((Occupiable) cells[r][c]).removeOccupant();
                     break;
                 }
-                //check the next block if it is an occupant
-                if (!((Occupiable) cells[r + 1][c]).getOccupant().isPresent())
-                    return false;
                 //check the next block if it is crate
                 if (((Occupiable) cells[r + 1][c]).getOccupant().get() instanceof Crate) {
-                    //check the next next block if it is valid
+                    /*//check the next next block if it is valid
                     if (!this.isValid((r + 2), c))
                         return false;
                     //if yes then check the next next block if it is empty
                     if (isOccupiableAndNotOccupiedWithCrate((r + 2), c)) {
-                        if (!this.moveCrate(((Crate) ((Occupiable) cells[r + 1][c]).getOccupant().get()), Direction.DOWN))
-                            return false;
+                        this.moveCrate(((Crate) ((Occupiable) cells[r + 1][c]).getOccupant().get()), Direction.DOWN);
                         //safe check for the next block is good to move
                         if (isOccupiableAndNotOccupiedWithCrate((r + 1), c)) {
                             player.setPos((r + 1), c);
                             ((Occupiable) cells[r + 1][c]).setOccupant(player);
                             ((Occupiable) cells[r][c]).removeOccupant();
                         }
-                        else return false;
-
+                        break;
+                    }*/
+                    if (this.moveCrate(((Crate) ((Occupiable) cells[r + 1][c]).getOccupant().get()), Direction.DOWN)) {
+                        if (isOccupiableAndNotOccupiedWithCrate((r + 1), c)) {
+                            player.setPos((r + 1), c);
+                            ((Occupiable) cells[r + 1][c]).setOccupant(player);
+                            ((Occupiable) cells[r][c]).removeOccupant();
+                        }
                         break;
                     }
                 }
@@ -267,26 +272,28 @@ public class Map {
                     ((Occupiable) cells[r][c]).removeOccupant();
                     break;
                 }
-                //check the next block if it is an occupant
-                if (!((Occupiable) cells[r][c - 1]).getOccupant().isPresent())
-                    return false;
                 //check the next block if it is crate
                 if (((Occupiable) cells[r][c - 1]).getOccupant().get() instanceof Crate) {
-                    //check the next next block if it is valid
+                    /*//check the next next block if it is valid
                     if (!this.isValid(r, (c - 2)))
                         return false;
                     //if yes then check the next next block if it is empty
                     if (isOccupiableAndNotOccupiedWithCrate(r, (c - 2))) {
-                        if (!this.moveCrate(((Crate) ((Occupiable) cells[r][c - 1]).getOccupant().get()), Direction.LEFT))
-                            return false;
+                        this.moveCrate(((Crate) ((Occupiable) cells[r][c - 1]).getOccupant().get()), Direction.LEFT);
                         //safe check for the next block is good to move
                         if (isOccupiableAndNotOccupiedWithCrate((r), c - 1)) {
                             player.setPos((r), c - 1);
                             ((Occupiable) cells[r][c - 1]).setOccupant(player);
                             ((Occupiable) cells[r][c]).removeOccupant();
                         }
-                        else return false;
-
+                        break;
+                    }*/
+                    if (this.moveCrate(((Crate) ((Occupiable) cells[r][c - 1]).getOccupant().get()), Direction.LEFT)) {
+                        if (isOccupiableAndNotOccupiedWithCrate((r), c - 1)) {
+                            player.setPos((r), c - 1);
+                            ((Occupiable) cells[r][c - 1]).setOccupant(player);
+                            ((Occupiable) cells[r][c]).removeOccupant();
+                        }
                         break;
                     }
                 }
@@ -306,32 +313,32 @@ public class Map {
                     ((Occupiable) cells[r][c]).removeOccupant();
                     break;
                 }
-                //check the next block if it is an occupant
-                if (!((Occupiable) cells[r][c + 1]).getOccupant().isPresent())
-                    return false;
                 //check the next block if it is crate
                 if (((Occupiable) cells[r][c + 1]).getOccupant().get() instanceof Crate) {
-                    //check the next next block if it is valid
+                    /*//check the next next block if it is valid
                     if (!this.isValid(r, (c + 2)))
                         return false;
                     //if yes then check the next next block if it is empty
                     if (isOccupiableAndNotOccupiedWithCrate(r, (c + 2))) {
-                        if (!this.moveCrate(((Crate) ((Occupiable) cells[r][c + 1]).getOccupant().get()), Direction.RIGHT))
-                            return false;
+                        this.moveCrate(((Crate) ((Occupiable) cells[r][c + 1]).getOccupant().get()), Direction.RIGHT);
                         //safe check for the next block is good to move
                         if (isOccupiableAndNotOccupiedWithCrate((r), c + 1)) {
                             player.setPos((r), c + 1);
                             ((Occupiable) cells[r][c + 1]).setOccupant(player);
                             ((Occupiable) cells[r][c]).removeOccupant();
                         }
-                        else return false;
-
+                        break;
+                    }*/
+                    if (this.moveCrate(((Crate) ((Occupiable) cells[r][c + 1]).getOccupant().get()), Direction.RIGHT)) {
+                        if (isOccupiableAndNotOccupiedWithCrate((r), c + 1)) {
+                            player.setPos((r), c + 1);
+                            ((Occupiable) cells[r][c + 1]).setOccupant(player);
+                            ((Occupiable) cells[r][c]).removeOccupant();
+                        }
                         break;
                     }
                 }
                 return false;
-
-            default: return false;
         }
 
         return true;
@@ -448,19 +455,8 @@ public class Map {
                 return false;
         }
 
-        //check if it is tile
-        if (!((Occupiable) cells[r][c]).getOccupant().isPresent()) {
-            if (cells[r][c] instanceof Tile)
-                return true;
-        }
-
-        //check if it is DestTile
-        if (!((Occupiable) cells[r][c]).getOccupant().isPresent()) {
-            if (cells[r][c] instanceof DestTile)
-                return true;
-        }
-
-        return false;
+        //the rest must be tile oe destTile
+        return true;
 
     }
 
