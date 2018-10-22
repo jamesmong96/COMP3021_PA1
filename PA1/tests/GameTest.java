@@ -86,7 +86,7 @@ class GameTest {
     @Test
     @DisplayName("Display - null pointer")
     void displayNullPointer() {
-
+        g.display();
     }
 
 
