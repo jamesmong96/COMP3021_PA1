@@ -40,6 +40,8 @@ public class Map {
         int countPlayer = 0;
         int countDest = 0;
         int countCrate = 0;
+        crates.clear();
+        destTiles.clear();
 
         try {
             for (int i = 0; i < rows; i++) {
@@ -47,7 +49,7 @@ public class Map {
                     //case of Uppercase letters
                     if ((int) rep[i][j] > 64 && (int) rep[i][j] < 91) {
                         cells[i][j] = new DestTile(rep[i][j]);
-                        destTiles.add(countDest, (DestTile) cells[i][j]);
+                        destTiles.add((DestTile) cells[i][j]);
                         countDest++;
                         continue;
                     }
@@ -56,7 +58,7 @@ public class Map {
                         cells[i][j] = new Tile();
                         Crate ctemp = new Crate(i, j, rep[i][j]);
                         ((Tile) cells[i][j]).setOccupant(ctemp);
-                        crates.add(countCrate, ctemp);
+                        crates.add(ctemp);
                         countCrate++;
                         continue;
                     }
