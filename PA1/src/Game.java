@@ -269,31 +269,34 @@ public class Game {
         try {
             switch (c) {
                 case 'w':
-                    m.movePlayer(Map.Direction.UP);
+                    if(m.movePlayer(Map.Direction.UP))
+                        return true;
                     break;
                 case 'a':
-                    m.movePlayer(Map.Direction.LEFT);
+                    if(m.movePlayer(Map.Direction.LEFT))
+                        return true;
                     break;
                 case 's':
                     if (m.movePlayer(Map.Direction.DOWN))
-                        ;
+                        return true;
                     break;
                 case 'd':
-                    m.movePlayer(Map.Direction.RIGHT);
+                    if(m.movePlayer(Map.Direction.RIGHT))
+                        return true;
                     break;
                 case 'r':
                     try {
                         m.initialize(this.numRows, this.numCols, this.rep);
+                        return true;
                     } catch (InvalidMapException e) {
                         //the map should pass the exception previously
                         return false;
                     }
-                    break;
                 default:
                     return false;
             }
 
-            return true; // You may also modify this line.
+            return false; // You may also modify this line.
 
         } catch (NullPointerException e) {
             return false;

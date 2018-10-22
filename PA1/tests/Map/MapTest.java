@@ -49,7 +49,8 @@ class MapTest {
                 {'#', '#', '#', '#', '#', '#'},
         };
 
-        assertThrows(InvalidNumberOfPlayersException.class, () -> m.initialize(rows, cols, testMap1));
+            assertThrows(InvalidNumberOfPlayersException.class, () -> m.initialize(rows, cols, testMap1));
+
     }
 
     @Test

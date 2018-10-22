@@ -21,6 +21,7 @@ class GameTest {
         assertThrows(InvalidMapException.class, () -> g.loadMap("tests/badmap.txt"));
     }
 
+
     @Test
     @DisplayName("Make move with Is Win")
     void testMakeMoveAndIsWin() {
@@ -38,5 +39,6 @@ class GameTest {
         assertTrue(g.makeMove('r'));
         assertFalse(g.isWin());
     }
+
 
 }
