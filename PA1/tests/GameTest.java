@@ -5,14 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.lang.annotation.IncompleteAnnotationException;
-import java.nio.InvalidMarkException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
@@ -87,14 +79,14 @@ class GameTest {
         g.loadMap("tests/testmap4.txt");
         assertFalse(g.isDeadlocked());
 
-        g.loadMap("test/testmap5.txt");
+        g.loadMap("tests/testmap5.txt");
         assertFalse(g.isDeadlocked());
     }
 
     @Test
     @DisplayName("Display - null pointer")
     void displayNullPointer() {
-       // assert
+
     }
 
 
