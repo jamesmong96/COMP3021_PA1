@@ -365,10 +365,10 @@ public class Map {
             case UP:
                 //check out of bound
                 if (!this.isValid((row - 1), col))
-                    return false;
+                    break;
                 //check the next block is valid to move
                 if (!isOccupiableAndNotOccupiedWithCrate((row - 1), col)) {
-                    return false;
+                    break;
                 }
                 //move the crate and remove the old one
                 c.setPos((row - 1), col);
@@ -379,10 +379,10 @@ public class Map {
             case DOWN:
                 //check out of bound
                 if (!this.isValid((row + 1), col))
-                    return false;
+                    break;
                 //check the next block is valid to move
                 if (!isOccupiableAndNotOccupiedWithCrate((row + 1), col)) {
-                    return false;
+                    break;
                 }
                 //move the crate and remove the old one
                 c.setPos(row + 1, col);
@@ -393,10 +393,10 @@ public class Map {
             case LEFT:
                 //check out of bound
                 if (!this.isValid(row, (col - 1)))
-                    return false;
+                    break;
                 //check the next block is valid to move
                 if (!isOccupiableAndNotOccupiedWithCrate(row, (col - 1))) {
-                    return false;
+                    break;
                 }
                 //move the crate and remove the old one
                 c.setPos(row, (col - 1));
@@ -404,13 +404,13 @@ public class Map {
                 ((Occupiable) cells[row][col]).removeOccupant();
                 return true;
 
-            default: //which is the case RIGHT
+            case RIGHT: //which is the case RIGHT
                 //check out of bound
                 if (!this.isValid(row, (col + 1)))
-                    return false;
+                    break;
                 //check the next block is valid to move
                 if (!isOccupiableAndNotOccupiedWithCrate(row, (col + 1))) {
-                    return false;
+                    break;
                 }
                 //move the crate and remove the old one
                 c.setPos(row, (col + 1));
@@ -418,6 +418,7 @@ public class Map {
                 ((Occupiable) cells[row][col]).removeOccupant();
                 return true;
         }
+        return false;
     }
 
     private boolean isValid(int r, int c) {
