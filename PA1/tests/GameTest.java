@@ -5,11 +5,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
     Game g;
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
+    private final PrintStream originalErr = System.err;
 
     @BeforeEach
     void setUp() throws InvalidMapException {
@@ -89,6 +96,60 @@ class GameTest {
         g.display();
     }
 
+    //------------------------TA_only_test-----------------------------
+
+    @Test
+    void isWin() {
+        assertFalse(g.isWin());
+
+        String moves = "swddddddd";
+        moves.chars().forEach(x -> g.makeMove((char) x));
+        assertTrue(g.isWin());
+    }
+
+    @Test
+    void isDeadlocked() {
+        assertFalse(g.isDeadlocked());
+
+        String moves = "dssawdwdddddddd";
+        moves.chars().forEach(x -> g.makeMove((char) x));
+        assertTrue(g.isDeadlocked());
+    }
+
+    @Test
+    void makeMove() {
+        assertTrue(g.makeMove('s'));
+        assertFalse(g.makeMove('s'));
+        assertTrue(g.makeMove('w'));
+
+        assertTrue(g.makeMove('d'));
+        assertTrue(g.makeMove('d'));
+        assertTrue(g.makeMove('d'));
+        assertTrue(g.makeMove('d'));
+        assertTrue(g.makeMove('d'));
+        assertTrue(g.makeMove('d'));
+
+        assertFalse(g.makeMove('d'));
+
+        assertTrue(g.makeMove('r'));
+
+        assertFalse(g.makeMove('v'));
+    }
+
+    @Test
+    void testDisplay() {
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
+        g.display();
+        assertEquals(
+                "##########" +
+                        "#@...a..A#" +
+                        "#b.......#" +
+                        "#B.......#" +
+                        "##########", outContent.toString().replaceAll("\\R",""));
+        System.setOut(originalOut);
+        System.setErr(originalErr);
+    }
 
 
 }
